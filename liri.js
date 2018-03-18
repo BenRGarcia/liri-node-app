@@ -1,3 +1,10 @@
+/*  npm packages:
+ *    https://www.npmjs.com/package/twitter
+ *    https://www.npmjs.com/package/node-spotify-api
+ *    https://www.npmjs.com/package/request
+ *    https://www.npmjs.com/package/dotenv
+ */
+
 // Import env variables, packages
 require("dotenv").config();
 var Spotify = require('node-spotify-api');
@@ -5,7 +12,7 @@ var Twitter = require('twitter');
 var keys = require("./keys.js");
 var request = require('request');
 
-// Initialize packages with env var config
+// Initialize packages with env var configs
 var spotify = new Spotify(keys.spotify);
 var client = new Twitter(keys.twitter);
 
@@ -17,21 +24,24 @@ const command = process.argv[2];
 // console.log(`Command is: ${command}`);
 // console.log(`Param is: ${param}`);
 
-/*  npm packages:
- *    https://www.npmjs.com/package/twitter
- *    https://www.npmjs.com/package/node-spotify-api
- *    https://www.npmjs.com/package/request
- *    https://www.npmjs.com/package/dotenv
+/*  Twitter | $ node liri.js my-tweets
+ *  Docs: https://developer.twitter.com/en/docs/tweets/timelines/api-reference/get-statuses-user_timeline.html
  */
-
-// Twitter - 'my-tweets' | node liri.js my-tweets
 if (command === 'my-tweets') {
-  var params = { screen_name: 'SeeBenProgram' };
+  // Establish query parameters
+  var params = {
+    screen_name: 'SeeBenProgram',
+    count: 20
+  };
+  // Make GET request based on parameters
   client.get('statuses/user_timeline', params, function (error, tweets, response) {
     if (!error) {
       for (let tweet of tweets) {
-        console.log(tweet.text);
+        // Log tweets
+        console.log(`\nOn ${tweet.created_at}, ${tweet.user.screen_name} tweeted:\n'${tweet.text}'`);
       }
+    } else {
+      console.log(error);
     }
   });
 }
