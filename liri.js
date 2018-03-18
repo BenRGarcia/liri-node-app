@@ -83,9 +83,31 @@ if (command === 'spotify-this-song') {
   }
 }
 
-// OMDB - 'movie-this' | node liri.js movie-this '<movie name here>'
+/*  OMDB | $ node liri.js movie-this '<movie name here>'
+ *  Docs: http://www.omdbapi.com/
+ */
 if (command === 'movie-this') {
+  // Sanitize Movie Title, add fallback if no movie name provided
+  let movieName = param || 'Mr. Nobody';
+  let queryName = movieName.replace(' ', '+');
+  let queryURL = 'http://www.omdbapi.com/?apikey=trilogy&t=' + movieName;
 
+  request(queryURL, function(error, response, body){
+    if (!error) {
+      // console.log(JSON.parse(body));
+      let movie = JSON.parse(body);
+      console.log(`\n              Movie Title: ${movie.Title}`);
+      console.log(`                     Year: ${movie.Year}`);
+      console.log(`              IMDB Rating: ${movie.Ratings[0].Value}`);
+      console.log(`   Rotten Tomatoes Rating: ${movie.Ratings[1].Value}`);
+      console.log(`Country in which Produced: ${movie.Country}`);
+      console.log(`                 Language: ${movie.Language}`);
+      console.log(`                   Actors: ${movie.Actors}`);
+      console.log(`                     Plot: ${movie.Plot}`);
+    } else {
+      console.log(error);
+    }
+  });
 }
 
 // <random.txt file command> - 'do-what-it-says' | node liri.js do-what-it-says
