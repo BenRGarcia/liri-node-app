@@ -23,3 +23,14 @@ console.log(`Param is: ${param}`);
  *    https://www.npmjs.com/package/request
  *    https://www.npmjs.com/package/dotenv
  */
+
+// Twitter - 'my-tweets' | node liri.js my-tweets
+
+
+// Spotify - 'spotify-this-song' | node liri.js spotify-this-song '<song name here>'
+
+
+// OMDB - 'movie-this' | node liri.js movie-this '<movie name here>'
+
+
+// <random.txt file command> - 'do-what-it-says' | node liri.js do-what-it-says
