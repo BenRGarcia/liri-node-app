@@ -18,7 +18,7 @@ var client = new Twitter(keys.twitter);
 
 // Declare variables for arguments
 const command = process.argv[2];
-// const param = process.argv[3];
+const param = process.argv[3];
 
 // For debugging
 // console.log(`Command is: ${command}`);
@@ -46,9 +46,12 @@ if (command === 'my-tweets') {
   });
 }
 
-// Spotify - 'spotify-this-song' | node liri.js spotify-this-song '<song name here>'
+/*  Spotify | $ node liri.js spotify-this-song '<song name here>'
+ *  Docs: 
+ *  
+ */
 if (command === 'spotify-this-song') {
-
+  let songName = param || 'The Sign';
 }
 
 // OMDB - 'movie-this' | node liri.js movie-this '<movie name here>'
