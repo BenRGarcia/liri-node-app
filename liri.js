@@ -3,6 +3,7 @@ require("dotenv").config();
 var Spotify = require('node-spotify-api');
 var Twitter = require('twitter');
 var keys = require("./keys.js");
+var request = require('request');
 
 // Initialize packages with env var config
 var spotify = new Spotify(keys.spotify);
