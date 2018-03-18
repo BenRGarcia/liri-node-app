@@ -11,11 +11,11 @@ var client = new Twitter(keys.twitter);
 
 // Declare variables for arguments
 const command = process.argv[2];
-const param = process.argv[3];
+// const param = process.argv[3];
 
 // For debugging
-console.log(`Command is: ${command}`);
-console.log(`Param is: ${param}`);
+// console.log(`Command is: ${command}`);
+// console.log(`Param is: ${param}`);
 
 /*  npm packages:
  *    https://www.npmjs.com/package/twitter
@@ -25,12 +25,28 @@ console.log(`Param is: ${param}`);
  */
 
 // Twitter - 'my-tweets' | node liri.js my-tweets
-
+if (command === 'my-tweets') {
+  var params = { screen_name: 'SeeBenProgram' };
+  client.get('statuses/user_timeline', params, function (error, tweets, response) {
+    if (!error) {
+      for (let tweet of tweets) {
+        console.log(tweet.text);
+      }
+    }
+  });
+}
 
 // Spotify - 'spotify-this-song' | node liri.js spotify-this-song '<song name here>'
+if (command === 'spotify-this-song') {
 
+}
 
 // OMDB - 'movie-this' | node liri.js movie-this '<movie name here>'
+if (command === 'movie-this') {
 
+}
 
 // <random.txt file command> - 'do-what-it-says' | node liri.js do-what-it-says
+if (command === 'do-what-it-says') {
+
+}
