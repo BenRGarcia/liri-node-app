@@ -11,6 +11,7 @@ var Spotify = require('node-spotify-api');
 var Twitter = require('twitter');
 var keys = require("./keys.js");
 var request = require('request');
+var fs = require('fs');
 
 // Initialize packages with env var configs
 var spotify = new Spotify(keys.spotify);
@@ -112,5 +113,5 @@ if (command === 'movie-this') {
 
 // <random.txt file command> - 'do-what-it-says' | node liri.js do-what-it-says
 if (command === 'do-what-it-says') {
-
+  fs.readFile('random.txt')
 }
