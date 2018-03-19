@@ -1,6 +1,7 @@
 // SearchOMDB Constructor
 const SearchOMDB = function() {};
 
+// Return object of OMDB movie title object
 SearchOMDB.prototype.search = function(movieName) {
   // Declare fallback movie name
   let name = movieName || 'Mr. Nobody';
@@ -9,7 +10,7 @@ SearchOMDB.prototype.search = function(movieName) {
   // Assemble url to query
   let queryURL = 'http://www.omdbapi.com/?apikey=trilogy&t=' + queryName;
   // Make API call
-  request(queryURL, (err, response, body) => {
+  return request(queryURL, (err, response, body) => {
     // Error handling
     if (err) throw err;
     // Parse JSON object
