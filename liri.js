@@ -4,6 +4,9 @@
 // Environment variables
 require("dotenv").config();
 const keys = require("./keys.js");
+// Dependencies
+const request = require('request');
+const fs = require('fs');
 // Twitter
 const Twitter = require('twitter');
 const twitter = new Twitter(keys.twitter);
@@ -15,11 +18,9 @@ const spotify = new Spotify(keys.spotify);
 const SearchSpotify = require('./searchSpotify');
 const searchSpotify = new SearchSpotify();
 // OMDB
-const request = require('request');
 const SearchOMDB = require('./searchOMDB');
 const searchOMDB = new SearchOMDB();
 // Data logging
-const fs = require('fs');
 const DataLogger = require('./dataLogger');
 const dataLogger = new DataLogger();
 // Command Parser
