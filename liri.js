@@ -126,6 +126,7 @@ function searchOMBD(param) {
 /*  <random.txt file command> | $ node liri.js do-what-it-says
  *  Docs: https://nodejs.org/dist/latest-v9.x/docs/api/fs.html#fs_file_system
  *        https://nodejs.org/dist/latest-v9.x/docs/api/fs.html#fs_fs_readfile_path_options_callback
+ *        https://nodejs.org/dist/latest-v9.x/docs/api/fs.html#fs_fs_appendfile_file_data_options_callback
  */
 function evaluateCommand() {
   fs.readFile('./random.txt', 'utf8', (err, data) => {
