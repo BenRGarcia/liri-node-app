@@ -4,6 +4,8 @@
 
 ## Description
 
+A Node.js command line program that takes user input, calls API, logs response in both the console and .txt file
+
 Valid commands:
 
 1. `node liri.js my-tweets`
