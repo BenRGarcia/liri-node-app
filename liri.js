@@ -1,3 +1,6 @@
+/*********************************************
+ * Import dependencies & Instantiate modules *
+ *********************************************/
 // Environment variables
 require("dotenv").config();
 const keys = require("./keys.js");
@@ -18,22 +21,31 @@ const SearchOMDB = require('./searchOMDB');
 const fs = require('fs');
 const DataLogger = require('./dataLogger');
 const dataLogger = new DataLogger();
+// Command Parser
+const ParseCommand = require('./parseCommand');
+const parseCommand = new ParseCommand();
 
+/*********************************
+ * JS Logic to Handle User Input *
+ *********************************/
 // Declare variables for arguments passed
 let command = process.argv[2];
 let param = process.argv[3];
 
+// Create object to store command & param
+let commandObj = { command, param };
+
 // Call function to route command
-routeCommand(command, param);
+routeCommand(commandObj);
 
 // A function to route command based on its value
-function routeCommand(command, param) {
-  switch (command) {
+function routeCommand(commandObj) {
+  switch (commandObj.command) {
     case 'my-tweets':
-      // Define (hard coded) search parameters
+      // Define (hard coded) Twitter search parameters
       let paramObj = { screen_name: 'SeeBenProgram', count: 20 };
       // Execute GET request
-      let results = searchTwitter(paramObj);
+      let results = searchTwitter.search(paramObj);
       // Log results
       dataLogger.log(results);
       break;
@@ -44,32 +56,17 @@ function routeCommand(command, param) {
       searchOMBD(param);
       break;
     case 'do-what-it-says':
-      parseCommand(command);
+      // Declare variable for file to be parsed
+      let fileToParse = './random.txt';
+      // Parse new command & param from fileToParse
+      let newCommandObj = parseCommand.parse(fileToParse);
+      // Recursive call to routeCommand
+      routeCommand(newCommandObj);
       break;
     default:
-      console.log(`Invalid command: '${command}'`);
+      console.log(`Invalid command: '${commandObj.command}'`);
       break;
   }
-}
-
-/*  Twitter | $ node liri.js my-tweets
- *  Docs: https://developer.twitter.com/en/docs/tweets/timelines/api-reference/get-statuses-user_timeline.html
- */
-function searchTwitter() {
-  let params = {
-    screen_name: 'SeeBenProgram',
-    count: 20
-  };
-  client.get('statuses/user_timeline', params, function (err, tweets, response) {
-    if (!err) {
-      for (let tweet of tweets) {
-        console.log(`\nOn ${tweet.created_at}, ${tweet.user.screen_name} tweeted:\n'${tweet.text}'`);
-        logToFile(`\nOn ${tweet.created_at}, ${tweet.user.screen_name} tweeted:\n'${tweet.text}'\n`);
-      }
-    } else {
-      console.log(err);
-    }
-  });
 }
 
 /*  Spotify | $ node liri.js spotify-this-song '<song name here>'
@@ -132,21 +129,5 @@ function searchOMBD(param) {
     } else {
       console.log(err);
     }
-  });
-}
-
-/*  <random.txt file command> | $ node liri.js do-what-it-says
- *  Docs: https://nodejs.org/dist/latest-v9.x/docs/api/fs.html#fs_file_system
- *        https://nodejs.org/dist/latest-v9.x/docs/api/fs.html#fs_fs_readfile_path_options_callback
- *        https://nodejs.org/dist/latest-v9.x/docs/api/fs.html#fs_fs_appendfile_file_data_options_callback
- */
-function parseCommand() {
-  fs.readFile('./random.txt', 'utf8', (err, data) => {
-    if (err) throw err;
-    // Parse file, route command
-    let array = data.split(',');
-    command = array[0];
-    param = array[1];
-    routeCommand(command, param);
   });
 }
