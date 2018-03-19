@@ -57,6 +57,7 @@ function searchTwitter() {
     if (!err) {
       for (let tweet of tweets) {
         console.log(`\nOn ${tweet.created_at}, ${tweet.user.screen_name} tweeted:\n'${tweet.text}'`);
+        logData(`\nOn ${tweet.created_at}, ${tweet.user.screen_name} tweeted:\n'${tweet.text}'\n`);
       }
     } else {
       console.log(err);
@@ -75,10 +76,12 @@ function searchSpotify(param) {
       limit: 1
     }, function (err, data) {
       if (!err) {
-        console.log(`\n Artist name: ${data.tracks.items[0].artists[0].name}`);
-        console.log(`  Album name: ${data.tracks.items[0].album.name}`);
-        console.log(`   Song name: ${data.tracks.items[0].name}`);
-        console.log(`Preview link: ${data.tracks.items[0].preview_url || '(not available)'}`);
+        let track = data.tracks.items[0];
+        console.log(`\n Artist name: ${track.artists[0].name}`);
+        console.log(`  Album name: ${track.album.name}`);
+        console.log(`   Song name: ${track.name}`);
+        console.log(`Preview link: ${track.preview_url || '(not available)'}`);
+        logData(`\n Artist name: ${track.artists[0].name}\n  Album name: ${track.album.name}\n   Song name: ${track.name}\nPreview link: ${track.preview_url || '(not available)'}\n`);
       } else {
         console.log(err);
       }
@@ -92,6 +95,7 @@ function searchSpotify(param) {
         console.log(`  Album name: ${data.album.name}`);
         console.log(`   Song name: ${data.name}`);
         console.log(`Preview link: ${data.preview_url}`);
+        logData(`\n Artist name: ${data.artists[0].name}\n  Album name: ${data.album.name}\n   Song name: ${data.name}\nPreview link: ${data.preview_url}\n`);
       })
       .catch(function (err) {
         console.log(err);
@@ -138,9 +142,7 @@ function evaluateCommand() {
 }
 
 function logData(data) {
-  console.log(data);
   fs.appendFile('log.txt', data, 'utf8', err => {
     if (err) throw err;
-    console.log('The "data to append" was appended to file!');
   });
 }
