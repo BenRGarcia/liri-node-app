@@ -30,7 +30,7 @@ SearchTwitter.prototype.search = function (paramsObj) {
       let name = tweet.user.screen_name;
       let text = tweet.text;
       // Add property to results object, date as key
-      results[date] = { date, name, text };
+      results[date] = { name, text };
     }
 
     return results;
