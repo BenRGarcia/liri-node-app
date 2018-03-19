@@ -29,7 +29,7 @@ SearchOMDB.prototype.search = function(movieName) {
                         "Plot": movie.Plot
     };
     return results;
-  };
+  });
 };
 
 module.exports = SearchOMDB;
