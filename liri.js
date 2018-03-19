@@ -121,6 +121,7 @@ function searchOMBD(param) {
       console.log(`                 Language: ${movie.Language}`);
       console.log(`                   Actors: ${movie.Actors}`);
       console.log(`                     Plot: ${movie.Plot}`);
+      logData(`\n              Movie Title: ${movie.Title}\n                     Year: ${movie.Year}\n              IMDB Rating: ${movie.Ratings[0].Value}\n   Rotten Tomatoes Rating: ${movie.Ratings[1].Value}\nCountry in which Produced: ${movie.Country}\n                 Language: ${movie.Language}\n                   Actors: ${movie.Actors}\n                     Plot: ${movie.Plot}\n`);
     } else {
       console.log(err);
     }
