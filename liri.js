@@ -119,28 +119,3 @@ function searchSpotify(param) {
       });
   }
 }
-
-/*  OMDB | $ node liri.js movie-this '<movie name here>'
- *  Docs: http://www.omdbapi.com/
- */
-function searchOMBD(param) {
-  let movieName = param || 'Mr. Nobody';
-  let queryName = movieName.replace(' ', '+');
-  let queryURL = 'http://www.omdbapi.com/?apikey=trilogy&t=' + movieName;
-  request(queryURL, function (err, response, body) {
-    if (!err) {
-      let movie = JSON.parse(body);
-      console.log(`\n              Movie Title: ${movie.Title}`);
-      console.log(`                     Year: ${movie.Year}`);
-      console.log(`              IMDB Rating: ${movie.Ratings[0].Value}`);
-      console.log(`   Rotten Tomatoes Rating: ${movie.Ratings[1].Value}`);
-      console.log(`Country in which Produced: ${movie.Country}`);
-      console.log(`                 Language: ${movie.Language}`);
-      console.log(`                   Actors: ${movie.Actors}`);
-      console.log(`                     Plot: ${movie.Plot}`);
-      logToFile(`\n              Movie Title: ${movie.Title}\n                     Year: ${movie.Year}\n              IMDB Rating: ${movie.Ratings[0].Value}\n   Rotten Tomatoes Rating: ${movie.Ratings[1].Value}\nCountry in which Produced: ${movie.Country}\n                 Language: ${movie.Language}\n                   Actors: ${movie.Actors}\n                     Plot: ${movie.Plot}\n`);
-    } else {
-      console.log(err);
-    }
-  });
-}
