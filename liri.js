@@ -54,11 +54,16 @@ function routeCommand(commandObj) {
       });
       break;
     case 'spotify-this-song':
-      searchSpotify(param);
+      searchSpotify.search(commandObj.param).then( response => {
+        // Log response when received
+        dataLogger.log(response);
+      }, err => {
+        console.log(err);
+      });
       break;
     case 'movie-this':
       // Execute Get request
-      searchOMBD.search(param).then( response => {
+      searchOMBD.search(commandObj.param).then( response => {
         // Log response when received
         dataLogger.log(response);
       }, err => {
@@ -79,43 +84,5 @@ function routeCommand(commandObj) {
     default:
       console.log(`Invalid command: '${commandObj.command}'`);
       break;
-  }
-}
-
-/*  Spotify | $ node liri.js spotify-this-song '<song name here>'
- *  Docs: https://beta.developer.spotify.com/documentation/web-api/
- */
-function searchSpotify(param) {
-  if (param) {
-    spotify.search({
-      type: 'track',
-      query: param,
-      limit: 1
-    }, function (err, data) {
-      if (!err) {
-        let track = data.tracks.items[0];
-        console.log(`\n Artist name: ${track.artists[0].name}`);
-        console.log(`  Album name: ${track.album.name}`);
-        console.log(`   Song name: ${track.name}`);
-        console.log(`Preview link: ${track.preview_url || '(not available)'}`);
-        logToFile(`\n Artist name: ${track.artists[0].name}\n  Album name: ${track.album.name}\n   Song name: ${track.name}\nPreview link: ${track.preview_url || '(not available)'}\n`);
-      } else {
-        console.log(err);
-      }
-    });
-  } else {
-    let queryURL = 'https://api.spotify.com/v1/tracks/3DYVWvPh3kGwPasp7yjahc';
-    spotify
-      .request(queryURL)
-      .then(function (data) {
-        console.log(`\n Artist name: ${data.artists[0].name}`);
-        console.log(`  Album name: ${data.album.name}`);
-        console.log(`   Song name: ${data.name}`);
-        console.log(`Preview link: ${data.preview_url}`);
-        logToFile(`\n Artist name: ${data.artists[0].name}\n  Album name: ${data.album.name}\n   Song name: ${data.name}\nPreview link: ${data.preview_url}\n`);
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
   }
 }
