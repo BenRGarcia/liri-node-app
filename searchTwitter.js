@@ -8,9 +8,6 @@ var SearchTwitter = function() {};
 // Returns object of tweets
 SearchTwitter.prototype.search = function (paramsObj) {
 
-  // Instantiate Twitter object
-  var client = new Twitter(keys.twitter);
-
   // Declare path of Twitter API endpoint to query
   let path = 'statuses/user_timeline';
 
@@ -18,7 +15,7 @@ SearchTwitter.prototype.search = function (paramsObj) {
   let results = {};
 
   // Make API call, return results object
-  return client.get(path, paramsObj, (err, tweets, response) => {
+  return twitter.get(path, paramsObj, (err, tweets, response) => {
 
     // Error handling
     if (err) throw err;
