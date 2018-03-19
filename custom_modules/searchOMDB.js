@@ -1,3 +1,6 @@
+// Dependency
+const request = require('request');
+
 // SearchOMDB Constructor
 const SearchOMDB = function() {};
 

@@ -1,3 +1,11 @@
+// Environment variables
+require("dotenv").config();
+const keys = require("../keys.js");
+const request = require('request');
+// Instantiate Modules
+const Spotify = require('node-spotify-api');
+const spotify = new Spotify(keys.spotify);
+
 // SearchSpotify Constructor
 const SearchSpotify = function() {};
 

@@ -1,20 +1,10 @@
 /*********************************************
  * Import dependencies & Instantiate modules *
  *********************************************/
-// Environment variables
-require("dotenv").config();
-const keys = require("./keys.js");
-// Dependencies
-const request = require('request');
-const fs = require('fs');
 // Twitter
-const Twitter = require('twitter');
-const twitter = new Twitter(keys.twitter);
 const SearchTwitter = require('./custom_modules/searchTwitter');
 const searchTwitter = new SearchTwitter();
 // Spotify
-const Spotify = require('node-spotify-api');
-const spotify = new Spotify(keys.spotify);
 const SearchSpotify = require('./custom_modules/searchSpotify');
 const searchSpotify = new SearchSpotify();
 // OMDB
@@ -30,15 +20,11 @@ const parseCommand = new ParseCommand();
 /*********************************
  * JS Logic to Handle User Input *
  *********************************/
-// Declare variables for arguments passed
-let command = process.argv[2];
-let param = process.argv[3] || false;
-
-// Create object to store command & param
-let commandObj = { command, param };
-
 // Call function to route command
-routeCommand(commandObj);
+routeCommand({
+  command: process.argv[2],
+  param: process.argv[3] || false
+});
 
 // A function to route command based on its value
 function routeCommand(commandObj) {

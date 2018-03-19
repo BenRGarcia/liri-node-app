@@ -1,3 +1,6 @@
+// Dependency
+const fs = require('fs');
+
 // ParseCommand constructor
 const ParseCommand = function() {};
 

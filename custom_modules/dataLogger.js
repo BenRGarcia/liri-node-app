@@ -1,3 +1,6 @@
+// Dependency
+const fs = require('fs');
+
 // DataLogger constructor
 var DataLogger = function() {};
 

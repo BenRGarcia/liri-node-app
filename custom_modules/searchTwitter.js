@@ -1,8 +1,17 @@
+// Environment variables
+require("dotenv").config();
+const keys = require("../keys.js");
+// Instantiate Modules
+const Twitter = require('twitter');
+const twitter = new Twitter(keys.twitter);
+
 // SearchTwitter Constructor
 var SearchTwitter = function() {};
 
 // Returns object of tweets
 SearchTwitter.prototype.search = function (paramsObj) {
+  console.log(`.search called with params Obj:`);
+  console.log(paramsObj);
   // Declare path of Twitter API endpoint to query
   let path = 'statuses/user_timeline';
   // Create empty object to store tweets
