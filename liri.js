@@ -53,13 +53,13 @@ function searchTwitter() {
     screen_name: 'SeeBenProgram',
     count: 20
   };
-  client.get('statuses/user_timeline', params, function (error, tweets, response) {
-    if (!error) {
+  client.get('statuses/user_timeline', params, function (err, tweets, response) {
+    if (!err) {
       for (let tweet of tweets) {
         console.log(`\nOn ${tweet.created_at}, ${tweet.user.screen_name} tweeted:\n'${tweet.text}'`);
       }
     } else {
-      console.log(error);
+      console.log(err);
     }
   });
 }
@@ -73,14 +73,14 @@ function searchSpotify(param) {
       type: 'track',
       query: param,
       limit: 1
-    }, function (error, data) {
-      if (!error) {
+    }, function (err, data) {
+      if (!err) {
         console.log(`\n Artist name: ${data.tracks.items[0].artists[0].name}`);
         console.log(`  Album name: ${data.tracks.items[0].album.name}`);
         console.log(`   Song name: ${data.tracks.items[0].name}`);
         console.log(`Preview link: ${data.tracks.items[0].preview_url || '(not available)'}`);
       } else {
-        console.log(error);
+        console.log(err);
       }
     });
   } else {
@@ -93,8 +93,8 @@ function searchSpotify(param) {
         console.log(`   Song name: ${data.name}`);
         console.log(`Preview link: ${data.preview_url}`);
       })
-      .catch(function (error) {
-        console.log(error);
+      .catch(function (err) {
+        console.log(err);
       });
   }
 }
@@ -106,8 +106,8 @@ function searchOMBD(param) {
   let movieName = param || 'Mr. Nobody';
   let queryName = movieName.replace(' ', '+');
   let queryURL = 'http://www.omdbapi.com/?apikey=trilogy&t=' + movieName;
-  request(queryURL, function (error, response, body) {
-    if (!error) {
+  request(queryURL, function (err, response, body) {
+    if (!err) {
       let movie = JSON.parse(body);
       console.log(`\n              Movie Title: ${movie.Title}`);
       console.log(`                     Year: ${movie.Year}`);
@@ -118,7 +118,7 @@ function searchOMBD(param) {
       console.log(`                   Actors: ${movie.Actors}`);
       console.log(`                     Plot: ${movie.Plot}`);
     } else {
-      console.log(error);
+      console.log(err);
     }
   });
 }
@@ -134,5 +134,13 @@ function evaluateCommand() {
     command = array[0];
     param = array[1];
     routeCommand(command, param);
+  });
+}
+
+function logData(data) {
+  console.log(data);
+  fs.appendFile('log.txt', data, 'utf8', err => {
+    if (err) throw err;
+    console.log('The "data to append" was appended to file!');
   });
 }
