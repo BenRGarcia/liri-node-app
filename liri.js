@@ -10,21 +10,21 @@ const fs = require('fs');
 // Twitter
 const Twitter = require('twitter');
 const twitter = new Twitter(keys.twitter);
-const SearchTwitter = require('./searchTwitter');
+const SearchTwitter = require('./custom_modules/searchTwitter');
 const searchTwitter = new SearchTwitter();
 // Spotify
 const Spotify = require('node-spotify-api');
 const spotify = new Spotify(keys.spotify);
-const SearchSpotify = require('./searchSpotify');
+const SearchSpotify = require('./custom_modules/searchSpotify');
 const searchSpotify = new SearchSpotify();
 // OMDB
-const SearchOMDB = require('./searchOMDB');
+const SearchOMDB = require('./custom_modules/searchOMDB');
 const searchOMDB = new SearchOMDB();
 // Data logging
-const DataLogger = require('./dataLogger');
+const DataLogger = require('./custom_modules/dataLogger');
 const dataLogger = new DataLogger();
 // Command Parser
-const ParseCommand = require('./parseCommand');
+const ParseCommand = require('./custom_modules/parseCommand');
 const parseCommand = new ParseCommand();
 
 /*********************************
