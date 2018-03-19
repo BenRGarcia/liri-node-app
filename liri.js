@@ -17,6 +17,7 @@ const searchSpotify = new SearchSpotify();
 // OMDB
 const request = require('request');
 const SearchOMDB = require('./searchOMDB');
+const searchOMDB = new SearchOMDB();
 // Data logging
 const fs = require('fs');
 const DataLogger = require('./dataLogger');
@@ -30,7 +31,7 @@ const parseCommand = new ParseCommand();
  *********************************/
 // Declare variables for arguments passed
 let command = process.argv[2];
-let param = process.argv[3];
+let param = process.argv[3] || false;
 
 // Create object to store command & param
 let commandObj = { command, param };
@@ -45,23 +46,35 @@ function routeCommand(commandObj) {
       // Define (hard coded) Twitter search parameters
       let paramObj = { screen_name: 'SeeBenProgram', count: 20 };
       // Execute GET request
-      let results = searchTwitter.search(paramObj);
-      // Log results
-      dataLogger.log(results);
+      searchTwitter.search(paramObj).then( response => {
+        // Log response when received
+        dataLogger.log(response);
+      }, err => {
+        console.log(err);
+      });
       break;
     case 'spotify-this-song':
       searchSpotify(param);
       break;
     case 'movie-this':
-      searchOMBD(param);
+      // Execute Get request
+      searchOMBD.search(param).then( response => {
+        // Log response when received
+        dataLogger.log(response);
+      }, err => {
+        console.log(err);
+      });
       break;
     case 'do-what-it-says':
       // Declare variable for file to be parsed
       let fileToParse = './random.txt';
       // Parse new command & param from fileToParse
-      let newCommandObj = parseCommand.parse(fileToParse);
-      // Recursive call to routeCommand
-      routeCommand(newCommandObj);
+      parseCommand.parse(fileToParse).then( response => {
+        // Recursive call to routeCommand
+        routeCommand(response);
+      }, err => {
+        console.log(err);
+      });
       break;
     default:
       console.log(`Invalid command: '${commandObj.command}'`);
