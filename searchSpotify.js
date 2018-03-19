@@ -47,7 +47,7 @@ SearchSpotify.prototype.search = function(trackName) {
   };
 
   return trackName
-    ? trackNameSearch(trackName);
+    ? trackNameSearch(trackName)
     : aceOfBaseSearch();
 };
 
