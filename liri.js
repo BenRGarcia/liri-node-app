@@ -18,13 +18,36 @@ var spotify = new Spotify(keys.spotify);
 var client = new Twitter(keys.twitter);
 
 // Declare variables for arguments
-const command = process.argv[2];
-const param = process.argv[3];
+let command = process.argv[2];
+let param = process.argv[3];
+
+// Call function to route command
+routeCommand(command, param);
+
+function routeCommand(command, param) {
+  switch (command) {
+    case 'my-tweets':
+      searchTwitter();
+      break;
+    case 'spotify-this-song':
+      searchSpotify(param);
+      break;
+    case 'movie-this':
+      searchOMBD(param);
+      break;
+    case 'do-what-it-says':
+      evaluateCommand(command);
+      break;
+    default:
+      console.log(`Invalid command: '${command}'`);
+      break;
+  }
+}
 
 /*  Twitter | $ node liri.js my-tweets
  *  Docs: https://developer.twitter.com/en/docs/tweets/timelines/api-reference/get-statuses-user_timeline.html
  */
-if (command === 'my-tweets') {
+function searchTwitter() {
   // Establish query parameters
   let params = {
     screen_name: 'SeeBenProgram',
@@ -46,7 +69,7 @@ if (command === 'my-tweets') {
 /*  Spotify | $ node liri.js spotify-this-song '<song name here>'
  *  Docs: https://beta.developer.spotify.com/documentation/web-api/
  */
-if (command === 'spotify-this-song') {
+function searchSpotify(param) {
   // If user provided song name
   if (param) {
     spotify.search({
@@ -64,36 +87,36 @@ if (command === 'spotify-this-song') {
         console.log(error);
       }
     });
-  } 
+  }
   // If user did not provide song name
   else {
     // Default if no 'param': Ace of Base 'The Sign'
     let queryURL = 'https://api.spotify.com/v1/tracks/3DYVWvPh3kGwPasp7yjahc';
     spotify
-    .request(queryURL)
-    .then(function(data){
-      // Log song details
-      console.log(`\n Artist name: ${data.artists[0].name}`);
-      console.log(`  Album name: ${data.album.name}`);
-      console.log(`   Song name: ${data.name}`);
-      console.log(`Preview link: ${data.preview_url}`);
-    })
-    .catch(function(error) {
-      console.log(error);
-    });
+      .request(queryURL)
+      .then(function (data) {
+        // Log song details
+        console.log(`\n Artist name: ${data.artists[0].name}`);
+        console.log(`  Album name: ${data.album.name}`);
+        console.log(`   Song name: ${data.name}`);
+        console.log(`Preview link: ${data.preview_url}`);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 }
 
 /*  OMDB | $ node liri.js movie-this '<movie name here>'
  *  Docs: http://www.omdbapi.com/
  */
-if (command === 'movie-this') {
+function searchOMBD(param) {
   // Sanitize Movie Title, add fallback if no movie name provided
   let movieName = param || 'Mr. Nobody';
   let queryName = movieName.replace(' ', '+');
   let queryURL = 'http://www.omdbapi.com/?apikey=trilogy&t=' + movieName;
 
-  request(queryURL, function(error, response, body){
+  request(queryURL, function (error, response, body) {
     if (!error) {
       // console.log(JSON.parse(body));
       let movie = JSON.parse(body);
@@ -111,7 +134,16 @@ if (command === 'movie-this') {
   });
 }
 
-// <random.txt file command> - 'do-what-it-says' | node liri.js do-what-it-says
-if (command === 'do-what-it-says') {
-  fs.readFile('random.txt')
+/*  <random.txt file command> | $ node liri.js do-what-it-says
+ *  Docs: https://nodejs.org/dist/latest-v9.x/docs/api/fs.html#fs_file_system
+ *        https://nodejs.org/dist/latest-v9.x/docs/api/fs.html#fs_fs_readfile_path_options_callback
+ */
+function evaluateCommand() {
+  fs.readFile('./random.txt', 'utf8', (err, data) => {
+    if (err) throw err;
+    let array = data.split(',');
+    command = array[0];
+    param = array[1];
+    routeCommand(command, param);
+  });
 }
