@@ -35,17 +35,15 @@ function routeCommand(commandObj) {
       // Execute GET request
       searchTwitter.search(paramObj).then( response => {
         // Log response when received
-        // dataLogger.log(response);
+        dataLogger.log(response);
       }, err => {
         console.log(err);
       });
       break;
     case 'spotify-this-song':
       searchSpotify.search(commandObj.param).then( response => {
-        console.log(`Response received from inside liri.js:`);
-        console.log(response);
         // Log response when received
-        // dataLogger.log(response);
+        dataLogger.log(response);
       }, err => {
         console.log(err);
       });
@@ -54,7 +52,7 @@ function routeCommand(commandObj) {
       // Execute Get request
       searchOMDB.search(commandObj.param).then( response => {
         // Log response when received
-        // dataLogger.log(response);
+        dataLogger.log(response);
       }, err => {
         console.log(err);
       });
