@@ -6,16 +6,21 @@ const ParseCommand = function() {};
 
 // Returns 'command' & 'param' variables object from given 'fileName'
 ParseCommand.prototype.parse = function(fileName) {
-  fs.readFile(fileName, 'utf8', (err, data) => {
-    // Error handling
-    if (err) throw err;
-    // Parse file
-    let dataArray = data.split(',');
-    // Declare variables for data
-    command = array[0];
-    param = array[1];
-    // Return object of command & param
-    return { command, param };
+
+  return new Promise((resolve, reject) => {
+
+    fs.readFile(fileName, 'utf8', (err, data) => {
+      // Error handling
+      if (err) reject(err);
+      // Parse file
+      let dataArray = data.split(',');
+      // Declare variables for data
+      command = dataArray[0];
+      param = dataArray[1] || false;
+      // Return object of command & param
+      resolve({ command, param });
+    });
+
   });
 }
 
