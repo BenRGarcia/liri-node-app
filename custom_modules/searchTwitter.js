@@ -14,13 +14,13 @@ SearchTwitter.prototype.search = function (paramsObj) {
   let path = 'statuses/user_timeline';
   // Create empty object to store tweets
   let results = {};
-  // Make API call, return results object
+  // Return promise to caller, make function '.then()able'
   return new Promise ((resolve, reject) => {
-
+    // Make API call
     twitter.get(path, paramsObj, (err, tweets, response) => {
       console.log(`Results from inside SearchTwitter.search() received`);
       // Error handling
-      if (err) throw err;
+      if (err) reject(err);
       // Iterate over tweets
       for (let tweet of tweets) {
         // Declare variables for parsed data
@@ -30,10 +30,9 @@ SearchTwitter.prototype.search = function (paramsObj) {
         // Add property to results object, date as key
         results[date] = { date, name, text };
       }
-      console.log(results);
+      // Promise resolved
       resolve(results);
     });
-    
   });
 }
 

@@ -36,7 +36,7 @@ function routeCommand(commandObj) {
       searchTwitter.search(paramObj).then( response => {
         // Log response when received
         console.log(`Response received from inside of liri.js`);
-        // console.log(response);
+        console.log(response);
         // dataLogger.log(response);
       }, err => {
         console.log(err);
