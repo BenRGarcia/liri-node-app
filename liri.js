@@ -28,7 +28,9 @@ routeCommand({
 
 // A function to route command based on its value
 function routeCommand(commandObj) {
+
   switch (commandObj.command) {
+
     case 'my-tweets':
       // Define (hard coded) Twitter search parameters
       let paramObj = { screen_name: 'SeeBenProgram', count: 20 };
@@ -40,6 +42,7 @@ function routeCommand(commandObj) {
         console.log(err);
       });
       break;
+      
     case 'spotify-this-song':
       searchSpotify.search(commandObj.param).then( response => {
         // Log response when received
@@ -48,6 +51,7 @@ function routeCommand(commandObj) {
         console.log(err);
       });
       break;
+      
     case 'movie-this':
       // Execute Get request
       searchOMDB.search(commandObj.param).then( response => {
@@ -57,6 +61,7 @@ function routeCommand(commandObj) {
         console.log(err);
       });
       break;
+      
     case 'do-what-it-says':
       // Declare variable for file to be parsed
       let fileToParse = './random.txt';
@@ -68,6 +73,7 @@ function routeCommand(commandObj) {
         console.log(err);
       });
       break;
+      
     default:
       console.log(`Invalid command: '${commandObj.command}'`);
       break;
