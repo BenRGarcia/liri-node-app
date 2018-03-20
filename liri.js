@@ -10,7 +10,7 @@ const searchSpotify = new SearchSpotify();
 // OMDB
 const SearchOMDB = require('./custom_modules/searchOMDB');
 const searchOMDB = new SearchOMDB();
-// Data logging
+// Data Logger
 const DataLogger = require('./custom_modules/dataLogger');
 const dataLogger = new DataLogger();
 // Command Parser
@@ -42,7 +42,7 @@ function routeCommand(commandObj) {
         console.log(err);
       });
       break;
-      
+
     case 'spotify-this-song':
       searchSpotify.search(commandObj.param).then( response => {
         // Log response when received
@@ -51,7 +51,7 @@ function routeCommand(commandObj) {
         console.log(err);
       });
       break;
-      
+
     case 'movie-this':
       // Execute Get request
       searchOMDB.search(commandObj.param).then( response => {
@@ -61,7 +61,7 @@ function routeCommand(commandObj) {
         console.log(err);
       });
       break;
-      
+
     case 'do-what-it-says':
       // Declare variable for file to be parsed
       let fileToParse = './random.txt';
@@ -73,7 +73,7 @@ function routeCommand(commandObj) {
         console.log(err);
       });
       break;
-      
+
     default:
       console.log(`Invalid command: '${commandObj.command}'`);
       break;
