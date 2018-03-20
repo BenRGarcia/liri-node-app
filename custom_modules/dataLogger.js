@@ -6,22 +6,28 @@ var DataLogger = function() {};
 
 // Logs data to console and .txt file
 DataLogger.prototype.log = function(dataObj) {
-  console.log(`dataLogger was called`);
-  // Iterate over objects in dataObj
-  for (let objKey in dataObj) {
-    // Iterate over properties of each object
-    for (let dataKey in objKey) {
-      // Parse data to be logged
-      let dataToLog = `\n${dataKey}:\n\t${objKey[dataKey]}`;
-      // Log data to console
-      console.log(dataToLog);
-      // Log data to .txt file
-      fs.appendFile('log.txt', dataToLog, 'utf8', err => {
-        if (err) throw err;
-      });
+  // Return a Promise to caller (in case of future need for '.then()')
+  return new Promise((resolve, reject) => {
+    // Create empty string to concatenate data that needs to be logged
+    let dataToLog = "";
+    // Iterate over objects in dataObj
+    for (let objKey in dataObj) {
+      // Iterate over properties of each object
+      for (let dataKey in dataObj[objKey]) {
+        // Parse data to be logged
+        dataToLog += `${dataKey}: ${dataObj[objKey][dataKey]}\n`;
+      }
+      // Append newline after each inner for loop run
+      dataToLog += "\n";
     }
-  }
-  return dataObj;
+    // Log data to console
+    console.log(dataToLog);
+    // Log data to file
+    fs.appendFile('log.txt', dataToLog, 'utf8', err => {
+      if (err) reject(err);
+      resolve(dataToLog);
+    });
+  });
 };
 
 module.exports = DataLogger;
