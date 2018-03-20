@@ -18,7 +18,6 @@ SearchTwitter.prototype.search = function (paramsObj) {
   return new Promise ((resolve, reject) => {
     // Make API call
     twitter.get(path, paramsObj, (err, tweets, response) => {
-      console.log(`Results from inside SearchTwitter.search() received`);
       // Error handling
       if (err) reject(err);
       // Iterate over tweets
