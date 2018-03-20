@@ -10,7 +10,7 @@ SearchOMDB.prototype.search = function(movieName) {
   // Declare fallback movie name
   let name = movieName || 'Mr. Nobody';
 
-  // Sanitize query for api call
+  // Sanitize query for api call (Use RegExp 'g' flag to replace all spaces in string)
   let queryName = name.replace(/\s/g, '+');
 
   // Assemble url to query
@@ -31,7 +31,7 @@ SearchOMDB.prototype.search = function(movieName) {
       // Create empty object to store movie details
       let results = {};
 
-      // Add property to results object, movie name as key
+      // Assemble results object, movie name as key
       results[movie.Title] = {
         "Movie Title": movie.Title,
         "Year": movie.Year,
