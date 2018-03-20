@@ -6,6 +6,7 @@ var DataLogger = function() {};
 
 // Logs data to console and .txt file
 DataLogger.prototype.log = function(dataObj) {
+  console.log(`dataLogger was called`);
   // Iterate over objects in dataObj
   for (let objKey in dataObj) {
     // Iterate over properties of each object
