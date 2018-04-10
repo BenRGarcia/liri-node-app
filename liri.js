@@ -33,7 +33,7 @@ function routeCommand(commandObj) {
 
     case 'my-tweets':
       // Define (hard coded) Twitter search parameters
-      let paramObj = { screen_name: 'SeeBenProgram', count: 20 };
+      let paramObj = { screen_name: 'SeeBenProgram', count: 5 };
       // Execute GET request
       searchTwitter.search(paramObj).then( response => {
         // Log response when received
